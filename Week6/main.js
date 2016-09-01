@@ -148,7 +148,7 @@ var mainState={
 		if(!enemy){
 			return;
 		}
-			enemy.anchor.setTo(0.5,1);
+			enemy.anchor.setTo(1,0.5);
 			enemy.reset(game.width/2,0);
 			enemy.body.gravity.y=-500;
 			enemy.body.velocity.x=100*game.rnd.pick([-1,1]);

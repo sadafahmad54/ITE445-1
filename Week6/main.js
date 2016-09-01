@@ -36,6 +36,8 @@ var mainState={
 		this.enemies. enableBody= true;
 		this.enemies.createMultiple(10, 'enemy');
         game.time.events.loop(2200, this.addEnemy, this);
+        game.time.events.loop(2200, this.addEnemyNew, this);
+
 
 
 	},
@@ -132,6 +134,23 @@ var mainState={
 			enemy.anchor.setTo(0.5,1);
 			enemy.reset(game.width/2,0);
 			enemy.body.gravity.y=500;
+			enemy.body.velocity.x=100*game.rnd.pick([-1,1]);
+ 			enemy.body.bounce.x=1;
+ 			enemy.checkWorldBounds= true;
+ 			enemy.outofBoundskill= true;
+
+
+	},
+
+	addEnemyNew: function(){
+
+		var enemy= this.enemies.getFirstDead();
+		if(!enemy){
+			return;
+		}
+			enemy.anchor.setTo(0.5,1);
+			enemy.reset(game.width/2,0);
+			enemy.body.gravity.y=-500;
 			enemy.body.velocity.x=100*game.rnd.pick([-1,1]);
  			enemy.body.bounce.x=1;
  			enemy.checkWorldBounds= true;

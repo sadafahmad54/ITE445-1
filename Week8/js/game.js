@@ -12,5 +12,5 @@ var game = new Phaser.Game(500, 340, Phaser.AUTO, "gameDiv");
 	game.state.add('menu', menuState);
 	game.state.add('play', playState);
 
-	game. state.start('boot');
+	game.state.start('boot');
 

@@ -20,10 +20,12 @@ var playState={
 		//game.stage.backgroundColor= '#3498db';
 		//game.physics.startSystem(Phaser.Physics.ARCADE);
 		//game.renderer.renderSession.roundPixels= true;
+		this.player= game.add.sprite(game.width/2, game.height/2, 'player');
+		this.player.anchor.setTo(0.5,0.5);
 		game.physics.arcade.enable(this.player);
 		this.player.anchor.setTo(0.5,0.5);
 	   
-		this.player.body.gravity.y=100;
+		this.player.body.gravity.y=500;
 		this.cursor=game.input.keyboard.createCursorKeys();
 		//this,player.tint=0*ff0000;
 		this.createWorld();
@@ -39,6 +41,31 @@ var playState={
         game.time.events.loop(2200, this.addEnemy, this);
         game.time.events.loop(2200, this.addEnemyNew, this);
 
+    //    this.jumpSound=game.add.audio('jump');
+      //  this.coinSound=game.add.audio('coin');
+       //  this.deadSound=game.add.audio('dead');
+        // this.music=game.add.audio('music');
+         //this.music.loop=true;
+        // this.music.play();
+        // this.music.stop();
+        //this.player.animations.add('right',[1,2],8,true);
+        // this.player.animations.add('left',[3,4],8,true);
+
+    //     this.emitter=game.add.emitter(0,0,15);
+      //   this.emitter.makeParticles('pixel');
+       //  this.emitter.setYSpeed(-150,150);
+         // this.emitter.setXSpeed(-150,150);
+         // this.emitter.setScale(2,0,2,0,800);
+         // this.emitter.gravity=0;
+
+         
+
+
+
+
+
+
+
 
 
 	},
@@ -53,6 +80,9 @@ var playState={
 
 		game.physics.arcade.collide(this.enemies, this.walls);
 		game.physics.arcade.overlap(this.player, this.enemies, this.playerDie, null, this);
+		if(!this.player.alive){
+			return;
+		}
 
 
 	},
@@ -60,17 +90,22 @@ var playState={
 	movePlayer: function(){
 		if(this.cursor.left.isDown){
 			this.player.body.velocity.x=-200;
+			//this.player.animations.play('left');
 		}
 		else if(this.cursor.right.isDown){
 			this.player.body.velocity.x=200;
+			//this.player.animations.play('right');
 		}
 
 		else{
 			this.player.body.velocity.x=0;
+			//this.player.animations.stop();
+			//this.player.frame=0;
 		}
 
 		if(this.cursor.up.isDown && this.player.body.touching.down){
 			this.player.body.velocity.y= -320;		
+			//this.jumpSound.play();
 		}
 	},
 	createWorld: function(){
@@ -99,14 +134,22 @@ var playState={
 
 	playerDie: function(){
 		game.state.start('main');
+	//	this.deadSound.play();
 	},
 
 
 	takeCoin: function(player, coin){
-		//this.coin.kill();
+		this.coin.kill();
+		this.coin.scale.setTo(0,0);
+		//game.add.tween(this.coin.scale).to({x:1, y:1},1000).start();
+		//game.add.tween(this.player.scale).to({x:1.3, y:1.3},1000).yoyo(true).start();
+		
+
 		game.global.score +=5;
 		this.scoreLabel.text='score:' + game.global.score;
 		this.updateCoinPosition();
+		//this.coinSound.play();
+
 	},
 
 	updateCoinPosition: function(){
@@ -163,7 +206,25 @@ var playState={
 
 
 	playerDie: function(){
+		
+	
+		this.player.kill();
+		//this.deadSound.play();
+		//this.emitter.x=this.player.x;
+		//this.emitter.y=this.player.y;
+		//this.emitter.start(true,800,null,15);
+		game.time.events.add(1000, this.startMenu, this);
+		//game.camera.shake(0.02, 300);
+	//	game.state.start('menu');
+
+
+
+	},
+
+	startMenu: function(){
+
 		game.state.start('menu');
 	},
+
 };
 

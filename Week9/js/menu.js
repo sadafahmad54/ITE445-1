@@ -31,14 +31,14 @@ var menuState={
 				  	 	 }
 
 		var startLabel = game.add.text(game.width/2, game.height-80, text, { font: '25px Arial', fill: '#ffffff' });
- 
+ 		startLabel.anchor.setTo(0.5,0.5);
 
 		//var startLabel= game.add.text(game.width/2, game.height-80, 'Press the Up Arrow Key to Start', {font: '20px Arial', fill:'#ffffff'});
 		//startLabel.anchor.setTo(0.5, 0.5);
 		//game.add.tween(startLabel).to({angel:-2},500).to({angel:2},1000).to({angel:0},500).loop().start();
 
-		//var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
-		//upKey.onDown.add(this.start, this);
+		var upKey = game.input.keyboard.addKey(Phaser.Keyboard.UP);
+		upKey.onDown.add(this.start, this);
 		if (!game.device.desktop) {
 		 game.input.onDown.add(this.start, this); 
 		}
